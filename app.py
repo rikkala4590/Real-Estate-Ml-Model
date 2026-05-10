@@ -28,7 +28,7 @@ if menu=="Upload Data":
         st.header("Upload Dataset") 
         file=st.file_uploader("Upload CSV file",type=["csv"])
         if file is not None:
-            st.cache_data
+            @st.cache_data
             def load_data(file):
                 return pd.read_csv(file)
             df=load_data(file)
