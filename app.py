@@ -24,19 +24,16 @@ if "reg_model" not in st.session_state:
     st.session_state.reg_model=None
 if "clf_model" not in st.session_state:
     st.session_state.clf_model=None
-if menu == "Upload Data":
-    st.header("Upload Dataset")
-    file = st.file_uploader("Upload CSV file", type=["csv"])
-    if file is not None:
-        @st.cache_data
-        def load_data(file):
-            return pd.read_csv(file)
-            df = load_data(file)
-            st.session_state.df = df
-            st.success("Data Loaded Successfully")
 
-            if show_data:
-            st.dataframe(df)
+if menu=="Upload Data":
+        st.header("Upload Dataset") 
+        file=st.file_uploader("Upload CSV file",type=["csv"])
+        if file:
+             df=pd.read_csv(file)
+             st.session_state.df=df
+             st.success("Data Loaded Successfully")
+             if show_data:
+                 st.dataframe(df)
 
 elif menu=="Train Model":
      st.header("Train ML Models")
@@ -60,12 +57,12 @@ elif menu=="Train Model":
          
           if st.button("Train Models"):
                
-            reg_model=RandomForestRegressor(n_estimators=50,max_depth=10,random_state=42)
+            reg_model=RandomForestRegressor()
             reg_model.fit(X_train,y_train_reg)
             reg_pred=reg_model.predict(X_test)
             mse=mean_squared_error(y_test_reg,reg_pred)
 
-            clf_model=RandomForestClassifier(n_estimators=50,max_depth=10,random_state=42)
+            clf_model=RandomForestClassifier()
             clf_model.fit(X_train,y_train_clf)
             clf_pred=clf_model.predict(X_test)
             acc=accuracy_score(y_test_clf,clf_pred)
@@ -106,4 +103,4 @@ elif menu=="Predict":
             clf_result=st.session_state.clf_model.predict(input_df)[0]
 
             st.success(f"Predicted Value:{reg_result}")
-            st.success(f"Classification:{clf_result}") 
+            st.success(f"Classification:{clf_result}")    
