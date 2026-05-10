@@ -24,18 +24,19 @@ if "reg_model" not in st.session_state:
     st.session_state.reg_model=None
 if "clf_model" not in st.session_state:
     st.session_state.clf_model=None
-if menu=="Upload Data":
-        st.header("Upload Dataset") 
-        file=st.file_uploader("Upload CSV file",type=["csv"])
-        if file is not None:
-            @st.cache_data
-            def load_data(file):
-                return pd.read_csv(file)
-            df=load_data(file)
-            st.session_state.df=df
-             st.success("Data Loaded Successfully")
-             if show_data:
-                 st.dataframe(df)
+if menu == "Upload Data":
+    st.header("Upload Dataset")
+    file = st.file_uploader("Upload CSV file", type=["csv"])
+    if file is not None:
+        @st.cache_data
+        def load_data(file):
+            return pd.read_csv(file)
+            df = load_data(file)
+            st.session_state.df = df
+            st.success("Data Loaded Successfully")
+
+            if show_data:
+            st.dataframe(df)
 
 elif menu=="Train Model":
      st.header("Train ML Models")
